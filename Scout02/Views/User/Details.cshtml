@@ -1,0 +1,215 @@
+﻿@model Scout02.Models.AllUserViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <h3>User Information</h3>
+            <hr />
+
+            @if (Model != null)
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Birthday)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Birthday)
+                        @*@Model.Age();*@
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RegisterDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.RegisterDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Surname)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Surname)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </dt>
+
+                    <dd>
+                        @Html.LabelFor(model => model.Gender, Model.Gender == true ? "Erkek" : "Kadın", new { @class = "badge badge-primary" })
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </dt>
+
+                    <dd>
+                        @Html.LabelFor(model => model.IsActive, Model.IsActive == true ? "Onaylı" : "Onaysız", new { @class = "badge badge-success" })
+                    </dd>
+
+                </dl>
+            }
+
+
+        </div>
+        <div class="col-md-4">
+            <h3>User Addresses</h3>
+            <hr />
+
+            @if (Model.UserAddress != null)
+            {
+                <dl class="dl-horizontal">
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.LastEditionTime)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.LastEditionTime)
+                        </dd>*@
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserAddress)
+                    </dt>
+
+                    <dd>
+                        <div class="col-md-12 pl-0 ">
+                            @*@Html.(model => model.UserAddress, Model.UserAddress.Length >= 25 ? Model.UserAddress.Substring(0, 45) + "...." : Model.UserAddress, new { id = "address" })*@
+                            <textarea disabled cols="50" rows="3">@Model.UserAddress</textarea>
+                          
+                        </div>
+                     
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.City)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.City)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+                </dl>
+            }
+            else
+            {
+                <p>this state doesn't exist <i class="fa fa-smile-o"></i></p>
+            }
+
+
+        </div>
+        <div class="col-md-4">
+
+            <h3>Social Medias</h3>
+            <hr />
+            @if (Model.UserSocialAccounts != null)
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.LabelFor(model => model.UserSocialAccounts.GoogleURL, "Google")
+                    </dt>
+
+                    <dd>
+                        <a href="@Model.UserSocialAccounts.InstagramURL"><i class="fa fa-google-plus-circle"></i>/google.com</a>
+
+                    </dd>
+
+                    <dt>
+                        @Html.LabelFor(model => model.UserSocialAccounts.InstagramURL, "Instagram")
+                    </dt>
+
+                    <dd>
+                        <a href="@Model.UserSocialAccounts.InstagramURL"><i class="fa fa-instagram"></i>/instagram.com</a>
+
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserSocialAccounts.TwitterURL)
+                    </dt>
+
+                    <dd>
+                        <a href="@Model.UserSocialAccounts.TwitterURL"><i class="fa fa-twitter"></i>/twitter.com</a>
+
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserSocialAccounts.LastEditionTime)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserSocialAccounts.LastEditionTime)
+                    </dd>
+
+                </dl>
+            }
+            else
+            {
+                <p>this state doesn't exist <i class="fa fa-smile-o"></i></p>
+            }
+
+
+
+        </div>
+    </div>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<script>
+
+    var moreAndless = function (address) {
+        var adresPartial = $('#address').text();
+        var adres = $.trim(adresPartial);
+        debugger
+
+        if (adres.length < 50) {
+            $('#address').html(address);
+            $('#deneme').text("Daha az göster");
+        }
+
+        else {
+            var partText = adres.substring(0, 40);
+            $('#address').text(partText + "...");
+            $('#deneme').text("Daha fazla göster");
+        }
+
+    }
+</script>

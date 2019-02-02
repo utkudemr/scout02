@@ -1,0 +1,36 @@
+
+.yazi{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    display:flex;
+    right:7px;
+    top:2px; 
+    
+}
+.iconEdit {
+    display:flex;
+  margin-left:15px;
+
+  
+}
+
+.sliderProp{
+   
+    position:absolute;
+   left:500px;
+   bottom:600px;
+   max-width:500px;
+}
+
+    .sliderProp ul {
+        margin:0;
+        padding:0;
+        list-style-type:none;
+    }
+        .sliderProp ul li {
+            display:none;
+        }
+            .sliderProp ul li img {
+                    width:500px;
+                    height:500px;
+            }
+

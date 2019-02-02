@@ -1,0 +1,180 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<Scout02.Models.AllUserViewModel>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+<link href="~/Styles/AdminPanel.css" rel="stylesheet" />
+<link href="~/Styles/input-field.css" rel="stylesheet" />
+<br />
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="input-container">
+    <i class="fa fa-search icon"></i>
+    <input type="text" class="input-field w-100" id="name" />
+</div>
+<div class="row">
+  
+        <table class="table">
+            <tr>
+                <th>
+                    <span><i class="fa fa-users"></i></span>
+                </th>
+                <th>
+
+                    @Html.DisplayNameFor(model => model.First().Birthday)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().RegisterDate)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Surname)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IsActive)
+                </th>
+               
+                      <tbody id="userRow">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+
+                            @Html.HiddenFor(modelItem => item.ApplicationUserId)
+                            <img src="@Url.Content(item.ImagePath)" alt="askdsa" style="width:50px; height:50px;" data-zoom-image="large/image1.jpg" id="datazoom" />
+                        </td>
+                        <td class="pt-4">
+
+                            @*@Html.DisplayFor(modelItem => item.ApplicationUser.Birthday)*@
+                            @if (item.Birthday != null)
+                            {
+                                var sonuc = DateTime.Now.Year - item.Birthday.Value.Year;
+                                @sonuc
+                            }
+
+                        </td>
+                        <td class="pt-4">
+                            @*@Html.DisplayFor(modelItem => item.ApplicationUser.RegisterDate)*@
+                            11.11.11
+                        </td>
+                        <td class="pt-4">
+                            @Html.DisplayFor(modelItem => item.Name, new { @class = "tablo" })
+                        </td>
+                        <td class="pt-4">
+                            @Html.DisplayFor(modelItem => item.Surname)
+                        </td>
+                        <td class="pt-4">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td class="pt-4">
+                            @if (item.Gender)
+                            {
+                                <i class="fa fa-male" title="Erkek"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-female" title="Kadın"></i>
+                            }
+
+
+                        </td>
+                        @*<td>
+                                @if (item.RoleName == "User")
+                                {
+                                    @Html.TextBoxFor(modelItem => item.RoleName, new { @class = "form-control btn btn-danger" })
+                                }
+
+                                @Html.DropDownListFor(modelItem=>item.RoleName,new SelectList(ViewBag.Roles,"Value","Text"),new { @class="form-control"})
+                            </td>*@
+                        <td class="d-flex justify-content-center pt-3" id="confirmed">
+                            @if (item.IsActive)
+                            {
+                                <button class="btn btn-block btn-primary" disabled><i class="fa fa-check" aria-hidden="true">Confirmed</i></button>
+                            }
+                            else
+                            {
+                                <button id="isActive" class="btn  btn-danger" onclick="confirMail('@item.ApplicationUserId')"><i class="fa fa-times"></i> Confirm</button>
+                            }
+                        </td>
+                        <td class="pt-4">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ApplicationUserId }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ApplicationUserId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationUserId })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    @Html.PagedListPager(Model,page=>Url.Action("Index",new { page,searchBy=Request.QueryString["searchBy"], search = Request.QueryString["search"] }),
+
+    new PagedListRenderOptions() { Display=PagedListDisplayMode.IfNeeded,DisplayPageCountAndCurrentLocation=true}
+)
+    </div>
+   
+
+<script>
+    var confirMail = function (Id) {
+        debugger
+        var url = "/User/MailConfirm?userName=" + Id;
+        var button = $(this);
+        $.ajax({
+            type: "Post",
+            url: url,
+            success: function (data) {
+                debugger
+                if (data != null) {
+                    $('#confirmed').empty();
+                    $('#confirmed').html("<button class='btn btn-block btn-primary' disabled><i class='fa fa - check' aria-hidden='true'>Confirmed</i></button>");
+                }
+            },
+            error: function () {
+                alert("sdadsd");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#name').keypress(function () {
+            var searchText = $(this).val();
+                debugger
+                $.ajax({
+                    type: "Post",
+                    url: "/User/SearchResult?searchText=" + searchText,
+                    async: true,
+                    success: function (response) {
+                        debugger
+                        if (response != "") {
+                            $('#userRow').html(response)
+                        }
+                        else
+                        {
+                            $('#userRow').html("<p>sadsad</p>")
+                        }
+                    }
+                })
+            
+        });
+       
+    });
+</script>

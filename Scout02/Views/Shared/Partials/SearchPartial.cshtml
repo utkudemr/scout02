@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Scout02.Models.AllUserViewModel>
+
+@foreach (var items in Model)
+{
+<tr>
+    <td>
+        @Html.HiddenFor(modelItem => items.ApplicationUserId)
+        <img src="@Url.Content(items.ImagePath)" alt="askdsa" style="width:50px; height:50px;" data-zoom-image="large/image1.jpg" id="datazoom" />
+    </td>
+    <td class="pt-4">
+
+        @*@Html.DisplayFor(modelItem => item.ApplicationUser.Birthday)*@
+        @if (items.Birthday != null)
+        {
+            var sonuc = DateTime.Now.Year - items.Birthday.Value.Year;
+            @sonuc
+        }
+
+    </td>
+    <td class="pt-4">
+        @*@Html.DisplayFor(modelItem => item.ApplicationUser.RegisterDate)*@
+        11.11.11
+    </td>
+    <td class="pt-4">
+        @Html.DisplayFor(modelItem => items.Name, new { @class = "tablo" })
+    </td>
+    <td class="pt-4">
+        @Html.DisplayFor(modelItem => items.Surname)
+    </td>
+    <td class="pt-4">
+        @Html.DisplayFor(modelItem => items.Email)
+    </td>
+    <td class="pt-4">
+        @if (items.Gender)
+        {
+            <i class="fa fa-male" title="Erkek"></i>
+        }
+        else
+        {
+            <i class="fa fa-female" title="Kadın"></i>
+        }
+
+
+    </td>
+    @*<td>
+            @if (item.RoleName == "User")
+            {
+                @Html.TextBoxFor(modelItem => item.RoleName, new { @class = "form-control btn btn-danger" })
+            }
+
+            @Html.DropDownListFor(modelItem=>item.RoleName,new SelectList(ViewBag.Roles,"Value","Text"),new { @class="form-control"})
+        </td>*@
+    <td class="d-flex justify-content-center pt-3" id="confirmed">
+        @if (items.IsActive)
+        {
+            <button class="btn btn-block btn-primary" disabled><i class="fa fa-check" aria-hidden="true">Confirmed</i></button>
+        }
+        else
+        {
+            <button id="isActive" class="btn  btn-danger" onclick="confirMail('@items.ApplicationUserId')"><i class="fa fa-times"></i> Confirm</button>
+        }
+    </td>
+    <td class="pt-4">
+        @Html.ActionLink("Edit", "Edit", new { id = items.ApplicationUserId }) |
+        @Html.ActionLink("Details", "Details", new { id = items.ApplicationUserId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = items.ApplicationUserId })
+    </td>
+</tr>
+}

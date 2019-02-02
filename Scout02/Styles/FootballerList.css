@@ -1,0 +1,25 @@
+﻿.fontt {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #212529;
+ 
+}
+i {
+    vertical-align: middle;
+}
+
+.table-users tbody tr:hover {
+    cursor: pointer;
+    background-color: #eee;
+}
+
+.nav-user-photo {
+    vertical-align: middle;
+}
+
+.user_panel {
+    width: 100%;
+}
